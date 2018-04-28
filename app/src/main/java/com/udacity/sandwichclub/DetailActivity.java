@@ -17,12 +17,16 @@ public class DetailActivity extends AppCompatActivity {
     public static final String EXTRA_POSITION = "extra_position";
     private static final int DEFAULT_POSITION = -1;
 
+    private static final String DELIMITER = ", ";
+    private static final String DEFAULT_ALIASES = "No other names known";
+    private static final String DEFAULT_INGREDIENTS = "Ingredients not available";
+    private static final String DEFAULT_ORIGIN = "Not known";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-
-        ImageView ingredientsIv = findViewById(R.id.image_iv);
 
         Intent intent = getIntent();
         if (intent == null) {
@@ -45,13 +49,9 @@ public class DetailActivity extends AppCompatActivity {
             return;
         }
 
+        // moved all UI fields into one method
         populateUI(sandwich);
-        Picasso.with(this)
-                .load(sandwich.getImage())
-                .error(R.mipmap.no_image_available) // using an image with text (created in Pinta)
-                .into(ingredientsIv);
 
-        setTitle(sandwich.getMainName());
     }
 
     private void closeOnError() {
@@ -64,13 +64,9 @@ public class DetailActivity extends AppCompatActivity {
      * @param sandwich Sandwich object with details for the activity
      */
     private void populateUI(Sandwich sandwich) {
-        final String DELIMITER = ", ";
-        final String DEFAULT_ALIASES = "No other names known";
-        final String DEFAULT_INGREDIENTS = "Ingredients not available";
-        final String DEFAULT_ORIGIN = "Not known";
-
         // Get string values and set defaults if necessary
         String mainNameValue = sandwich.getMainName();
+        String imgUrlValue = sandwich.getImage();
         String originValue = sandwich.getPlaceOfOrigin();
         if(originValue == null || originValue.trim().equals("")) {
             originValue = DEFAULT_ORIGIN;
@@ -81,12 +77,20 @@ public class DetailActivity extends AppCompatActivity {
                 DEFAULT_INGREDIENTS: TextUtils.join(DELIMITER, sandwich.getIngredients());
         String descriptionValue = sandwich.getDescription();
 
+        ImageView ingredientsIv = findViewById(R.id.image_iv);
 
         TextView mainNameTv = findViewById(R.id.main_name_tv);
         TextView alsoKnownAsTv = findViewById(R.id.also_known_tv);
         TextView originTv = findViewById(R.id.origin_tv);
         TextView descriptionTv = findViewById(R.id.description_tv);
         TextView ingredientsTv = findViewById(R.id.ingredients_tv);
+
+        Picasso.with(this)
+                .load(imgUrlValue)
+                .error(R.mipmap.no_image_available) // using an image with text (created in Pinta)
+                .into(ingredientsIv);
+
+        setTitle(mainNameValue);
 
         mainNameTv.setText(mainNameValue);
         alsoKnownAsTv.setText(knownAsValue);
