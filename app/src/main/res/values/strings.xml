@@ -13,6 +13,14 @@
     <!-- Error messages-->
     <string name="detail_error_message">Sandwich data not available</string>
 
+    <!-- Placeholders for tools:text -->
+    <string name="main_name_placeholder">Main Name</string>
+    <string name="also_known_placeholder">Also known by this name</string>
+    <string name="origin_placeholder">Country of origin</string>
+    <string name="ingredients_placeholder">List, of, ingredients, here</string>
+    <string name="description_placeholder">Description of sandwich</string>
+
+
     <string-array name="sandwich_names">
         <item>Ham and cheese sandwich</item>
         <item>Bosna</item>

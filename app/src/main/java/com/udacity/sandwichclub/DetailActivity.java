@@ -65,18 +65,33 @@ public class DetailActivity extends AppCompatActivity {
      */
     private void populateUI(Sandwich sandwich) {
         final String DELIMITER = ", ";
+        final String DEFAULT_ALIASES = "No other names known";
+        final String DEFAULT_INGREDIENTS = "Ingredients not available";
+        final String DEFAULT_ORIGIN = "Not known";
 
-        String knownAsValue = TextUtils.join(DELIMITER, sandwich.getAlsoKnownAs());
-        String ingredientsValue = TextUtils.join(DELIMITER, sandwich.getIngredients());
+        // Get string values and set defaults if necessary
+        String mainNameValue = sandwich.getMainName();
+        String originValue = sandwich.getPlaceOfOrigin();
+        if(originValue == null || originValue.trim().equals("")) {
+            originValue = DEFAULT_ORIGIN;
+        }
+        String knownAsValue = sandwich.getAlsoKnownAs().size()==0 ?
+                DEFAULT_ALIASES : TextUtils.join(DELIMITER, sandwich.getAlsoKnownAs());
+        String ingredientsValue = sandwich.getIngredients().size()==0 ?
+                DEFAULT_INGREDIENTS: TextUtils.join(DELIMITER, sandwich.getIngredients());
+        String descriptionValue = sandwich.getDescription();
 
+
+        TextView mainNameTv = findViewById(R.id.main_name_tv);
         TextView alsoKnownAsTv = findViewById(R.id.also_known_tv);
         TextView originTv = findViewById(R.id.origin_tv);
         TextView descriptionTv = findViewById(R.id.description_tv);
         TextView ingredientsTv = findViewById(R.id.ingredients_tv);
 
+        mainNameTv.setText(mainNameValue);
         alsoKnownAsTv.setText(knownAsValue);
-        originTv.setText(sandwich.getPlaceOfOrigin());
-        descriptionTv.setText(sandwich.getDescription());
+        originTv.setText(originValue);
+        descriptionTv.setText(descriptionValue);
         ingredientsTv.setText(ingredientsValue);
 
     }
