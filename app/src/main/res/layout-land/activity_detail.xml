@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<layout>
 
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -43,6 +44,7 @@
 
     <!-- Reuse sandwich_details.xml layout file -->
     <include
+        android:id="@+id/sandwich_info"
         layout="@layout/sandwich_details"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -52,3 +54,5 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
+
+</layout>
